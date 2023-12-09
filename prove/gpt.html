@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Dichiarazione del set di caratteri del documento -->
+    <meta charset="UTF-8" />
+    <!-- Configurazione della visualizzazione per dispositivi mobili -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      /* Stile per il corpo del documento */
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #f2f2f2;
+      }
+
+      /* Stile per l'elemento con l'id "score" */
+      #score {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        font-size: 20px;
+      }
+
+      /* Stile per l'elemento con l'id "timer" */
+      #timer {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 20px;
+      }
+
+      /* Stile per l'elemento con l'id "buttons-container" */
+      #buttons-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 50px;
+      }
+
+      /* Stile per gli elementi con la classe "game-button" (i pulsanti del gioco) */
+      .game-button {
+        padding: 15px 30px;
+        font-size: 18px;
+        text-align: center;
+        cursor: pointer;
+      }
+    </style>
+    <title>Color Matching Game</title>
+  </head>
+  <body>
+    <!-- Elemento per visualizzare il punteggio iniziale -->
+    <div id="score">Score: 0</div>
+    <!-- Elemento per visualizzare il timer iniziale -->
+    <div id="timer">Timer: 5</div>
+    <!-- Contenitore per i pulsanti del gioco -->
+    <div id="buttons-container"></div>
+
+    <script>
+      const colors = [
+        "green",
+        "orange",
+        "red",
+        "blue",
+        "yellow",
+        "purple",
+        "gray",
+      ];
+      let score = 0;
+      let timer = 5;
+
+      function getRandomColor() {
+        // Restituisce un colore casuale dall'array
+        return colors[Math.floor(Math.random() * colors.length)];
+      }
+
+      function shuffleArray(array) {
+        // Mescola l'array
+        for (let i = array.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [array[i], array[j]] = [array[j], array[i]];
+        }
+      }
+
+      function updateButtons() {
+        // Aggiorna i pulsanti del gioco con nuovi colori e gestisce la logica di gioco
+        shuffleArray(colors);
+
+        const buttonsContainer = document.getElementById("buttons-container");
+        buttonsContainer.innerHTML = "";
+
+        const correctColorIndex = Math.floor(Math.random() * colors.length);
+        const correctColor = colors[correctColorIndex];
+
+        for (let i = 0; i < colors.length; i++) {
+          const button = document.createElement("button");
+          button.textContent = colors[i];
+          button.style.backgroundColor =
+            i === correctColorIndex ? correctColor : getRandomColor();
+          button.className = "game-button";
+          button.addEventListener("click", () =>
+            handleButtonClick(i === correctColorIndex)
+          );
+          buttonsContainer.appendChild(button);
+        }
+      }
+
+      function handleButtonClick(isCorrect) {
+        // Gestisce l'evento di clic sui pulsanti del gioco, aggiornando il punteggio e i pulsanti
+        if (isCorrect) {
+          score++;
+        } else {
+          score = Math.max(0, score - 1);
+        }
+
+        document.getElementById("score").textContent = `Score: ${score}`;
+        updateButtons();
+      }
+
+      function startTimer() {
+        // Avvia il timer del gioco
+        const timerElement = document.getElementById("timer");
+        const interval = setInterval(() => {
+          timer--;
+
+          if (timer < 0) {
+            timer = 5;
+            updateButtons();
+          }
+
+          timerElement.textContent = `Timer: ${timer}`;
+        }, 1000);
+      }
+
+      // Avvia il gioco al caricamento della pagina
+      updateButtons();
+      startTimer();
+    </script>
+  </body>
+</html>
