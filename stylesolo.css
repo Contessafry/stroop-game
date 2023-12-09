@@ -71,3 +71,10 @@ body {
 .arancione {
   color: rgb(255, 119, 0);
 }
+#cuori {
+  position: absolute;
+  top: 0px;
+}
+img {
+  width: 40px;
+}

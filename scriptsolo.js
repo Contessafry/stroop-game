@@ -22,6 +22,12 @@ let timer = 5; // Tempo in secondi
 let timerElement = document.getElementById("timer");
 let scoreElement = document.getElementById("score");
 
+const hearts = [
+  document.getElementById("heart1"),
+  document.getElementById("heart2"),
+  document.getElementById("heart3"),
+];
+
 function assegnaOpzioni() {
   // Scegli casualmente un indice corretto
   const indiceCorretto = Math.floor(Math.random() * tasti.length);
@@ -57,7 +63,6 @@ function handleButtonClick(tasto, indice) {
     // Altrimenti, decrementa il punteggio
     score = Math.max(0, score - 1);
   }
-
   // Aggiorna il punteggio nell'elemento HTML
   scoreElement.textContent = `Score: ${score}`;
 
@@ -152,7 +157,47 @@ function changeBackgroundColor() {
 // Chiamare la funzione per cambiare il colore quando necessario
 changeBackgroundColor();
 
-// Il resto del tuo codice...
+let wrongAttempts = 0; // Contatore degli errori
+
+function handleButtonClick(tasto, indice) {
+  const coloreCliccato = tasto.classList[1]; // Ottieni la classe del colore del tasto cliccato
+  const coloreAtteso = colori[indice]; // Ottieni il colore atteso
+
+  if (coloreCliccato === coloreAtteso) {
+    // Incrementa il punteggio se il colore è corretto
+    score++;
+  } else {
+    // Altrimenti, decrementa il punteggio e incrementa il contatore degli errori
+    score = Math.max(0, score - 1);
+    hideHeart(wrongAttempts);
+    wrongAttempts++;
+    // Se il giocatore ha commesso tre errori, mostra il messaggio di perdita
+    if (wrongAttempts === 3) {
+      showGameOverMessage();
+      return; // Interrompi la funzione, il gioco è finito
+    }
+  }
+
+  // Aggiorna il punteggio nell'elemento HTML
+  scoreElement.textContent = `Score: ${score}`;
+
+  // Assegna nuove opzioni e reimposta il timer
+  assegnaOpzioni();
+  resetTimer();
+  spostaTastiCasualmente();
+}
+
+function showGameOverMessage() {
+  // Mostra un messaggio di fine gioco con il punteggio ottenuto
+  alert(`Game Over! Your Score: ${score}`);
+  location.reload();
+}
+
+function hideHeart(index) {
+  if (index >= 0 && index < hearts.length) {
+    hearts[index].style.display = "none";
+  }
+}
 
 // Aggiorna il timer ogni secondo
 setInterval(updateTimer, 1000);
