@@ -185,6 +185,7 @@ function handleButtonClick(tasto, indice) {
   assegnaOpzioni();
   resetTimer();
   spostaTastiCasualmente();
+  changeBackgroundColor();
 }
 
 function showGameOverMessage() {
