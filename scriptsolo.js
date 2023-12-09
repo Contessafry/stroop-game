@@ -1,10 +1,20 @@
-const colori = ["verde", "blu", "rosso", "giallo", "viola"];
+const colori = [
+  "verde",
+  "blu",
+  "rosso",
+  "giallo",
+  "viola",
+  "fuchsia",
+  "arancione",
+];
 const tasti = [
   document.getElementById("tastoverde"),
   document.getElementById("tastoblu"),
   document.getElementById("tastorosso"),
   document.getElementById("tastogiallo"),
   document.getElementById("tastoviola"),
+  document.getElementById("tastorosa"),
+  document.getElementById("tastoarancione"),
 ];
 
 let score = 0;

@@ -42,7 +42,7 @@ body {
 .game-button {
   border: solid 2px;
   border-color: currentColor;
-  background-color: lightgray;
+  background-color: #b3b3b347;
   border-radius: 30px;
   padding: 15px 30px;
   font-size: 18px;
@@ -64,4 +64,10 @@ body {
 }
 .viola {
   color: blueviolet;
+}
+.fuchsia {
+  color: fuchsia;
+}
+.arancione {
+  color: rgb(255, 119, 0);
 }
